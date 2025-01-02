@@ -82,8 +82,8 @@ function ViewAllProducts() {
             <div className="product-list">
               {Array.isArray(products) && products.length > 0 ? (
                 products.map((product) => (
-                  <NavLink to={`/all-products/${product._id}`} key={product._id}>
                     <div className="product-card" key={product._id}>
+                      <NavLink to={`/all-products/${product._id}`} >
                     <img
                       src={product.image}
                       alt={product.name}
@@ -95,6 +95,7 @@ function ViewAllProducts() {
                     <p className="product-price">
                       <Amount amount={product.price} />
                     </p>
+                    </NavLink>
                     <div className="button-container">
                       <button
                         className="edit-button"
@@ -112,7 +113,7 @@ function ViewAllProducts() {
                       </button>
                     </div>
                   </div>
-                  </NavLink>
+                  
                 ))
               ) : (
                 <p>No products available.</p>
