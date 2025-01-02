@@ -5,7 +5,7 @@ import AddProduct from "./Components/AddProduct";
 import ViewAllProducts from "./Components/ViewAllProducts";
 import OrderDetails from "./Components/OrderDetails";
 import OrderHistory from "./Components/OrderHistory";
-import SIngleProduct from "./Components/SIngleProduct";
+import SingleProduct from "./Components/SingleProduct";
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
             <Routes>
               <Route path="/" element={<AddProduct />} />
                <Route path="/all-products" element={<ViewAllProducts />} /> 
-               <Route path="/all-products/:id" element={<SIngleProduct/>} /> 
+               <Route path="/all-products/:id" element={<SingleProduct/>} /> 
               <Route path="/order-details" element={<OrderDetails />} /> 
               <Route path="/order-history" element={<OrderHistory />} /> 
             </Routes>

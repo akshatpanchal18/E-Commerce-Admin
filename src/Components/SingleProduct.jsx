@@ -5,7 +5,7 @@ import { useProductAdmin } from '../Contaxt/ProductContext'
 import { FaArrowLeft } from 'react-icons/fa6'
 import Amount from '../Helper/Amount'
 
-function SIngleProduct() {
+function SingleProduct() {
     const {ProductDetails}=useProductAdmin()
     const [product,setProduct]=useState(null)
     const { id } = useParams();
@@ -123,4 +123,4 @@ const Data = styled.div`
   }
 `;
 
-export default SIngleProduct
+export default SingleProduct
