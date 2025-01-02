@@ -5,7 +5,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({children})=>{
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const URL = 'http://localhost:5000/api/v1'
+    const URL = 'https://e-commerce-server-b1yi.onrender.com/api/v1'
 
     const login = async(loginData)=>{
 
