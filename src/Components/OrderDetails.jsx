@@ -22,7 +22,7 @@ function OrderDetails() {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    const socket = io("http://localhost:5000", {
+    const socket = io("https://e-commerce-server-b1yi.onrender.com", {
       transports: ["polling"],
     });
 
