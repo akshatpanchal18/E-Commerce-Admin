@@ -31,7 +31,7 @@ export const AuthProvider = ({children})=>{
     }
     const logout = async()=>{
        try {
-         const res = await fetch(`${URL}/user/logout`,{
+         const res = await fetch(`${URL}/user/logout-admin`,{
              method:"POST",
              headers: { "Content-Type": "application/json" },
              credentials:"include",
