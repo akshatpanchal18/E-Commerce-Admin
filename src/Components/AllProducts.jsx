@@ -15,7 +15,7 @@ function AllProducts() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [showPopup, setShowpopup] = useState(true);
+  const [showPopup, setShowpopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
   const [popupBg, setPopupBg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
