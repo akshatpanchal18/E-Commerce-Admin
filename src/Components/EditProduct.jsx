@@ -1,218 +1,146 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { useAuth } from '../Contaxt/AuthContaxt';
-import { useProductAdmin } from '../Contaxt/ProductContext';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../Context/AuthContext";
+import { useProductAdmin } from "../Context/ProductContext";
 
 const EditProductModal = ({ product, isOpen, onClose, onUpdate }) => {
-  // console.log(product);
-  const {URL}=useAuth()
-const {updateProduct}=useProductAdmin()
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [image, setImage] = useState('');
-  const [stock, setStock] = useState('');
+  const { updateProduct } = useProductAdmin();
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
   const [isFeatured, setIsFeatured] = useState(false);
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
 
   useEffect(() => {
     if (product) {
-      setName('');
-      setPrice('');
-      setImage('');
-      setStock(''); // Set initial stock value
-      setIsFeatured(product.isFeatured || false); // Set initial featured status
+      setName(product.name || "");
+      setPrice(product.price || "");
+      setStock(product.stock || "");
+      setIsFeatured(product.isFeatured || false);
+      setCategory(product.category || "");
+      setBrand(product.brand || "");
     }
   }, [product]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Prepare the payload
     const payload = {
       _id: product._id,
       name,
       price,
-      image,
       stock,
       isFeatured,
+      category,
+      brand,
     };
-updateProduct(payload).then((res)=>{
-if(res.success){
-  onUpdate(); // Call onUpdate to refresh the product list
-      onClose();
-}else{
-  console.log(res.data);
-  
-}
-})
-    // Make API call to update product
-    // const res = await fetch(`${URL}/product/update`, {
-    //   method: 'PUT',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(payload),
-    //   credentials: 'include',
-    // });
 
-    // const result = await res.json();
-    // if (result.statusCode === 200) {
-    //   onUpdate(); // Call onUpdate to refresh the product list
-    //   onClose(); // Close the modal
-    // }
+    updateProduct(payload).then((res) => {
+      if (res.success) {
+        onUpdate();
+        onClose();
+      } else {
+        console.log(res.data);
+      }
+    });
   };
 
-  if (!isOpen) return null; // Don't render anything if not open
+  if (!isOpen) return null;
 
   return (
-    <ModalOverlay>
-      <ModalContent>
-        <h2>Edit Product</h2>
-        <div className='info'>
-        <p><strong>ID:</strong> {product._id}</p>
-        <p><strong>Name:</strong> {product.name}</p>
-        <img src={product.image} alt="" />
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>
-              Name:
+    <>
+      <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg bg-opacity-70">
+        <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+          <h2 className="text-xl font-semibold mb-4 text-center">
+            Edit Product
+          </h2>
+          <div className="flex flex-col items-center mb-4">
+            <p className="text-sm">
+              <strong>ID:</strong> {product._id}
+            </p>
+            <p className="text-sm">
+              <strong>Name:</strong> {product.name}
+            </p>
+            <img
+              src={product.image}
+              alt=""
+              className="w-24 h-24 object-cover rounded-md mt-2"
+            />
+          </div>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-sm font-medium">Name:</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                className="w-full border p-2 rounded"
               />
-            </label>
-          </div>
-          <div>
-            <label>
-              Price:
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Category:</label>
+              <input
+                type="text"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full border p-2 rounded"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Brand:</label>
+              <input
+                type="text"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                className="w-full border p-2 rounded"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Price:</label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(parseFloat(e.target.value))}
+                className="w-full border p-2 rounded"
               />
-            </label>
-          </div>
-          <div>
-            <label>
-              Stock:
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Stock:</label>
               <input
                 type="number"
                 value={stock}
-                onChange={(e) => setStock(parseInt(e.target.value) || '')}
-                
+                onChange={(e) => setStock(parseInt(e.target.value) || "")}
+                className="w-full border p-2 rounded"
               />
-            </label>
-          </div>
-          {/* <div>
-            <label>
-              Image URL:
-              <input
-                type="text"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                required
-              />
-            </label>
-          </div> */}
-          <div>
-            <label>
-              Featured:
+            </div>
+            <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
                 checked={isFeatured}
                 onChange={(e) => setIsFeatured(e.target.checked)}
+                className="w-4 h-4"
               />
-            </label>
-          </div>
-          <ButtonContainer>
-            <button type="submit">Update</button>
-            <button type="button" onClick={onClose}>Cancel</button>
-          </ButtonContainer>
-        </form>
-      </ModalContent>
-    </ModalOverlay>
+              <label className="text-sm">Featured</label>
+            </div>
+            <div className="flex justify-between mt-4">
+              <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                Update
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalContent = styled.div`
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-  .info{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  }
-img{
-width:100px;
-object-fit:cover;
-}
-  h2 {
-    margin-bottom: 15px;
-    color: #333;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-
-  label {
-    margin-bottom: 10px;
-  }
-
-  input {
-    padding: 8px;
-    margin-top: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  button {
-    margin-top: 10px;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  button[type="submit"] {
-    background-color: #007bff;
-    color: white;
-  }
-
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-
-  button[type="button"] {
-    background-color: #dc3545;
-    color: white;
-  }
-
-  button[type="button"]:hover {
-    background-color: #c82333;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 export default EditProductModal;

@@ -1,136 +1,78 @@
-import React, { useState } from 'react'
-import styled from 'styled-components';
-import { useAuth } from '../Contaxt/AuthContaxt';
+import { useState } from "react";
+import { useAuth } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-    const {login}=useAuth()
-    const [loading,setLoading] = useState(false)
-    const [loginData,setLoginData] = useState({
-        email:'',
-        password:''
-    })
-    const handleLoginChange = (e) => {
-        const { name, value } = e.target; // Destructure name and value from the target
-        setLoginData((prevData) => ({
-            ...prevData,
-            [name]: value, // Update the corresponding field
-        }));
-    };
-      const handleLoginSubmit =(e)=>{
-        e.preventDefault();
-        setLoading(true)
-        // console.log(loginData);
-        
-        login(loginData)
-      }
-    
+const LoginPage = () => {
+  const { login } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await login(loginData);
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed", error);
+    }
+    setLoading(false);
+  };
+
   return (
-    <LoginDiv>
-          <div className="login-form-container">
-            <h2 className="login-form-title">Admin Login</h2>
-            <form className="login-form-layout">
-              <div className="form-group">
-                <label className="form-label">Email</label>
-                <input
-                  type="email"
-                  className="form-input"
-                  placeholder="Enter email"
-                  name="email"
-                  value={loginData.email}
-                  onChange={handleLoginChange}
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  className="form-input"
-                  placeholder="Enter password"
-                  name="password"
-                  value={loginData.password}
-                  onChange={handleLoginChange}
-                />
-              </div>
-              {
-                loading ? (<>
-                <p style={{textAlign:"center",color:"#2c3e50",fontSize:"1rem",fontWeight:"bold"}}>Loding ...</p>
-                </>):(<></>)
-              }
-              <button type="submit" className="form-button" onClick={handleLoginSubmit}>
-                Login
-              </button>
-            </form>
+    <div className="flex justify-center min-h-screen items-center bg-gray-100">
+      <div>
+        <img src="/Login.svg" alt="" className="max-w-md w-full" />
+      </div>
+      <div className="max-w-md w-full px-6 py-12 bg-white shadow-xl rounded-2xl">
+        <h1 className="flex items-center text-gray-900 text-center text-3xl font-bold mb-6">
+          <img
+            src="https://img.freepik.com/free-vector/colorful-letter-gradient-logo-design_474888-2309.jpg"
+            alt=""
+            className="w-20 h-20  mb-4 rounded-2xl"
+          />{" "}
+          Welcome Admin
+        </h1>
+        <form onSubmit={handleLoginSubmit} className="space-y-6">
+          <input
+            type="email"
+            name="email"
+            value={loginData.email}
+            onChange={handleLoginChange}
+            className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg border border-gray-300 rounded-full px-4"
+            placeholder="Email"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            value={loginData.password}
+            onChange={handleLoginChange}
+            className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg border border-gray-300 rounded-full px-4"
+            placeholder="Password"
+            required
+          />
+          <div className="flex justify-between">
+            <a href="#" className="text-indigo-600 text-base">
+              Forgot Password?
+            </a>
           </div>
-        </LoginDiv>
-  )
-}
-const LoginDiv = styled.div`
-  /* LoginForm.css */
-  .login-form-container {
-    width: 300px;
-    margin: 6rem auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+          <button
+            type="submit"
+            className="w-full h-12 text-white bg-indigo-600 rounded-full text-lg font-semibold hover:bg-indigo-800 transition-all duration-300"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Login"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-  .login-form-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    text-align: center;
-    color: #333;
-  }
-
-  .login-form-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .form-label {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 4px;
-    color: #555;
-  }
-
-  .form-input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-  }
-
-  .form-input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-
-  .form-button {
-    padding: 10px;
-    font-size: 16px;
-    color: #fff;
-    // background-color: #2c3e50;
-    background-color: #2c4e41;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
-  }
-
-  .form-button:hover {
-    // background-color: #0056b3;
-    background-color: rgb(31, 53, 45);
-  }
-`;
-export default Login
+export default LoginPage;

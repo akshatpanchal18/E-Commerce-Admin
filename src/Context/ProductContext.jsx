@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { createContext } from "react";
-import { useAuth } from "./AuthContaxt";
+import { useAuth } from "./AuthContext";
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const { URL } = useAuth();
   const addProducts = async (formData, file) => {
+    console.log(URL);
+
     const formdata = new FormData();
     formdata.append("name", formData.name);
     formdata.append("description", formData.description);
@@ -77,7 +79,7 @@ export const ProductProvider = ({ children }) => {
     }
   };
   const deleteProduct = async (product) => {
-    // console.log(product);
+    console.log(product);
     // console.log(product._id);
 
     try {
@@ -109,7 +111,13 @@ export const ProductProvider = ({ children }) => {
   };
   return (
     <ProductContext.Provider
-      value={{ fetchProducts, addProducts, updateProduct, deleteProduct,ProductDetails }}
+      value={{
+        fetchProducts,
+        addProducts,
+        updateProduct,
+        deleteProduct,
+        ProductDetails,
+      }}
     >
       {children}
     </ProductContext.Provider>
