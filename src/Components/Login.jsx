@@ -27,7 +27,11 @@ const LoginPage = () => {
   return (
     <div className="flex justify-center min-h-screen items-center bg-gray-100">
       <div>
-        <img src="/Login.svg" alt="" className="max-w-md w-full" />
+        <img
+          src="/Login.svg"
+          alt=""
+          className="max-w-md w-full lg:flex hidden"
+        />
       </div>
       <div className="max-w-md w-full px-6 py-12 bg-white shadow-xl rounded-2xl">
         <h1 className="flex items-center text-gray-900 text-center text-3xl font-bold mb-6">
