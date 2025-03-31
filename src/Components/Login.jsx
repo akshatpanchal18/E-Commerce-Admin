@@ -26,54 +26,59 @@ const LoginPage = () => {
 
   return (
     <div className="flex justify-center min-h-screen items-center bg-gray-100">
-      <div>
-        <img
-          src="/Login.svg"
-          alt=""
-          className="max-w-md w-full lg:flex hidden"
-        />
-      </div>
-      <div className="max-w-md w-full px-6 py-12 bg-white shadow-xl rounded-2xl">
-        <h1 className="flex items-center text-gray-900 text-center text-3xl font-bold mb-6">
+      <div className="flex items-stretch max-w-3xl w-full rounded-2xl ">
+        {/* Left Side - Image */}
+        <div className="hidden lg:block w-1/2">
           <img
-            src="https://img.freepik.com/free-vector/colorful-letter-gradient-logo-design_474888-2309.jpg"
-            alt=""
-            className="w-20 h-20  mb-4 rounded-2xl"
-          />{" "}
-          Welcome Admin
-        </h1>
-        <form onSubmit={handleLoginSubmit} className="space-y-6">
-          <input
-            type="email"
-            name="email"
-            value={loginData.email}
-            onChange={handleLoginChange}
-            className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg border border-gray-300 rounded-full px-4"
-            placeholder="Email"
-            required
+            src="/Login.svg"
+            alt="Login Illustration"
+            className="h-full w-full object-cover rounded-l-2xl"
           />
-          <input
-            type="password"
-            name="password"
-            value={loginData.password}
-            onChange={handleLoginChange}
-            className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg border border-gray-300 rounded-full px-4"
-            placeholder="Password"
-            required
-          />
-          <div className="flex justify-between">
-            <a href="#" className="text-indigo-600 text-base">
-              Forgot Password?
-            </a>
-          </div>
-          <button
-            type="submit"
-            className="w-full h-12 text-white bg-indigo-600 rounded-full text-lg font-semibold hover:bg-indigo-800 transition-all duration-300"
-            disabled={loading}
-          >
-            {loading ? "Loading..." : "Login"}
-          </button>
-        </form>
+        </div>
+
+        {/* Right Side - Form */}
+        <div className="w-full lg:w-1/2 px-6 py-12 flex flex-col justify-center">
+          <h1 className="flex items-center justify-center text-gray-900 text-3xl font-bold mb-6">
+            <img
+              src="https://img.freepik.com/free-vector/colorful-letter-gradient-logo-design_474888-2309.jpg"
+              alt="Logo"
+              className="w-16 h-16 rounded-2xl"
+            />
+            Welcome Admin
+          </h1>
+          <form onSubmit={handleLoginSubmit} className="space-y-6">
+            <input
+              type="email"
+              name="email"
+              value={loginData.email}
+              onChange={handleLoginChange}
+              className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg border border-gray-300 rounded-full px-4"
+              placeholder="Email"
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              value={loginData.password}
+              onChange={handleLoginChange}
+              className="w-full h-12 text-gray-900 placeholder-gray-400 text-lg border border-gray-300 rounded-full px-4"
+              placeholder="Password"
+              required
+            />
+            <div className="flex justify-between">
+              <a href="#" className="text-indigo-600 text-base">
+                Forgot Password?
+              </a>
+            </div>
+            <button
+              type="submit"
+              className="w-full h-12 text-white bg-indigo-600 rounded-full text-lg font-semibold hover:bg-indigo-800 transition-all duration-300"
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Login"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
